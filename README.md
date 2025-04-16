@@ -232,3 +232,5 @@ Feel free to fork, improve, or suggest new features! For learning purposes only.
 
 ## 🧑‍💻 Author
 Codeconqurors
+## Output
+![image alt](https://github.com/Code-Conquorers/Security-System/blob/7b7a35dd294f0917bdcddaf1b7dbdf597fdca6d2/security%20system.jpg)
