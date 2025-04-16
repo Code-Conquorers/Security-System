@@ -41,163 +41,19 @@ The project covers various aspects of a typical user management system:
 - The interface is kept simple to prioritize backend logic.
 
 ---
-
 ## 🧠 Functions Used in Code
+- `void loadUsers()`: Loads user data from a CSV file into memory.
+- `void saveUsers()`: Saves all users from memory into a CSV file.
+- `bool userExists(const string& username)`: Checks if a user already exists.
+- `bool isStrongPassword(const string& password)`: Verifies password strength by ensuring it includes at least 8 characters, one uppercase letter, one lowercase letter, one digit, and one special character.
+- `void registerUser()`: Handles user registration by collecting input, validating email and password, then storing user data.
+- `void loginUser()`: Manages user login by verifying credentials against stored data.
+- `void changePassword()`: Allows a user to change their password after verifying their old password.
+- `void recoverPassword()`: Handles password recovery by asking the user’s predefined security question.
+- `void showMenu()`: Displays the main menu and handles user choices in a loop until the user chooses to exit.
+- `bool isValidEmail(const string& email)`: Helper function to validate email format (basic check for '@' and '.' positions).
 
-### `void loadUsers()`
-Clears existing users and loads data from the CSV file:
-```cpp
-users.clear();
-ifstream file(dataFile);
-string line;
-while (getline(file, line)) {
-    stringstream ss(line);
-    User user;
-    getline(ss, user.username, ',');
-    getline(ss, user.password, ',');
-    getline(ss, user.age, ',');
-    getline(ss, user.securityQuestion, ',');
-    getline(ss, user.securityAnswer, ',');
-    users[user.username] = user;
-}
-file.close();
-```
 
-### `void saveUsers()`
-Writes all users to CSV file:
-```cpp
-ofstream file(dataFile);
-for (const auto& pair : users) {
-    const User& user = pair.second;
-    file << user.username << ","
-         << user.password << ","
-         << user.age << ","
-         << user.securityQuestion << ","
-         << user.securityAnswer << "\n";
-}
-file.close();
-```
-
-### `bool userExists(const string& username)`
-Checks if the username exists:
-```cpp
-return users.find(username) != users.end();
-```
-
-### `bool isStrongPassword(const string& password)`
-Checks password complexity:
-```cpp
-if (password.length() < 8) return false;
-bool hasUpper = false, hasLower = false, hasDigit = false, hasSpecial = false;
-for (char ch : password) {
-    if (isupper(ch)) hasUpper = true;
-    if (islower(ch)) hasLower = true;
-    if (isdigit(ch)) hasDigit = true;
-    if (ispunct(ch)) hasSpecial = true;
-}
-return hasUpper && hasLower && hasDigit && hasSpecial;
-```
-
-### `void registerUser()`
-Handles new user registration:
-```cpp
-loadUsers();
-User newUser;
-cout << "Enter email: ";
-cin >> newUser.username;
-// validate email & check existence
-cout << "Enter password: ";
-cin >> newUser.password;
-// check strength
-cout << "Enter age: ";
-cin >> newUser.age;
-cin.ignore();
-cout << "Security question: ";
-getline(cin, newUser.securityQuestion);
-cout << "Answer: ";
-getline(cin, newUser.securityAnswer);
-users[newUser.username] = newUser;
-saveUsers();
-```
-
-### `void loginUser()`
-Authenticates user:
-```cpp
-loadUsers();
-string uname, pass;
-cout << "Enter email: "; cin >> uname;
-cout << "Enter password: "; cin >> pass;
-if (userExists(uname) && users[uname].password == pass) {
-    cout << "Login successful!";
-} else {
-    cout << "Incorrect credentials.";
-}
-```
-
-### `void changePassword()`
-Changes existing user's password:
-```cpp
-loadUsers();
-string uname, oldPass;
-cout << "Enter email: "; cin >> uname;
-cout << "Enter old password: "; cin >> oldPass;
-if (users[uname].password == oldPass) {
-    string newPass1, newPass2;
-    cout << "Enter new password: "; cin >> newPass1;
-    cout << "Confirm password: "; cin >> newPass2;
-    if (newPass1 == newPass2 && isStrongPassword(newPass1)) {
-        users[uname].password = newPass1;
-        saveUsers();
-        cout << "Password changed.";
-    } else {
-        cout << "Passwords don’t match or weak.";
-    }
-} else {
-    cout << "Wrong old password.";
-}
-```
-
-### `void recoverPassword()`
-Resets password via security question:
-```cpp
-loadUsers();
-string uname;
-cout << "Enter email: "; cin >> uname;
-cin.ignore();
-cout << "Security Question: " << users[uname].securityQuestion << "\n";
-string answer; getline(cin, answer);
-if (answer == users[uname].securityAnswer) {
-    string newPass1, newPass2;
-    cout << "Enter new password: "; getline(cin, newPass1);
-    cout << "Confirm new password: "; getline(cin, newPass2);
-    if (newPass1 == newPass2 && isStrongPassword(newPass1)) {
-        users[uname].password = newPass1;
-        saveUsers();
-        cout << "Password reset successful.";
-    } else {
-        cout << "Passwords don’t match or weak.";
-    }
-} else {
-    cout << "Incorrect answer.";
-}
-```
-
-### `void showMenu()`
-Displays the user menu:
-```cpp
-int choice;
-do {
-    cout << "1. Register\n2. Login\n3. Change Password\n4. Recover Password\n5. Exit\n";
-    cin >> choice;
-    switch (choice) {
-        case 1: registerUser(); break;
-        case 2: loginUser(); break;
-        case 3: changePassword(); break;
-        case 4: recoverPassword(); break;
-        case 5: cout << "Exiting..."; break;
-        default: cout << "Invalid choice."; break;
-    }
-} while (choice != 5);
 ```
 
 ### `bool isValidEmail(const string& email)`
