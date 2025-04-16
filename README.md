@@ -54,15 +54,6 @@ The project covers various aspects of a typical user management system:
 - `bool isValidEmail(const string& email)`: Helper function to validate email format (basic check for '@' and '.' positions).
 
 
-```
-
-### `bool isValidEmail(const string& email)`
-Validates format of email:
-```cpp
-size_t atPos = email.find('@');
-size_t dotPos = email.find('.', atPos);
-return atPos != string::npos && dotPos != string::npos && atPos < dotPos;
-```
 
 ---
 
