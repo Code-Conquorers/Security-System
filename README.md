@@ -212,8 +212,8 @@ return atPos != string::npos && dotPos != string::npos && atPos < dotPos;
 
 ## 🚀 How to Run
 1. Clone/download the repository.
-2. Compile using a C++ compiler (e.g., `g++ security_system.cpp -o security_system`)
-3. Run the program (`./security_system` or `security_system.exe`)
+2. Compile using a C++ compiler (e.g., `g++ project.cpp -o project`)
+3. Run the program (`./project` or `project.exe`)
 4. `users.csv` will be created in the working directory to store user data.
 
 ---
@@ -224,7 +224,7 @@ Feel free to fork, improve, or suggest new features! For learning purposes only.
 ---
 
 ## 📁 Files
-- `security_system.cpp` - Main source code
+- `project.cpp` - Main source code
 - `users.csv` - Stores user data
 - `README.md` - This presentation document
 
